@@ -11,7 +11,7 @@ has env    => sub { {} };
 has method => 'GET';
 has [qw(proxy reverse_proxy)];
 has request_id => sub {
-  sha1_sum($SEED . ($COUNTER = ($COUNTER + 1) % 0xffffff));
+  substr b64_encode($SEED . ($COUNTER = ($COUNTER + 1) % 0xffffff)), 0, 12;
 };
 has url       => sub { Mojo::URL->new };
 has via_proxy => 1;
